@@ -68,7 +68,7 @@ void rgb(uint8_t r, uint8_t g, uint8_t b)
 
 void app_main(void)
 {
-    //Start RMT in GPIO 18 (ESP32-S2 Saola)
+    //Inicia o RMT0 no GPIO 18 com o clock de (80MHz / 4)
     rmt_config_t cfg = RMT_DEFAULT_CONFIG_TX(GPIO_NUM_18, RMT_CHANNEL_0);
     cfg.clk_div = 4;
 

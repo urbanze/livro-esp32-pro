@@ -9,6 +9,7 @@
 
 void app_main(void)
 {
+    //Configura a UART
     uart_config_t cfg;
     cfg.baud_rate = 115200;
     cfg.data_bits = UART_DATA_8_BITS;
@@ -22,16 +23,16 @@ void app_main(void)
     uart_driver_install(UART_NUM_1, 256, 0, 0, NULL, 0);
 
 
-    uint8_t inp[32];
+    uint8_t inp[32] = {0};
     char out[16] = "ESP32 UART";
     while (1)
     {
-        uart_write_bytes(UART_NUM_1, out, strlen(out));
+        uart_write_bytes(UART_NUM_1, out, strlen(out)); //Escreve o buffer na saida
 
-        memset(inp, 0, sizeof(inp));
-        if (uart_read_bytes(UART_NUM_1, inp, sizeof(inp)-1, pdMS_TO_TICKS(1000)))
+        if (uart_read_bytes(UART_NUM_1, inp, sizeof(inp)-1, pdMS_TO_TICKS(1000))) //Aguarda dados durante 1seg
         {
             ESP_LOGI(__func__, "UART received: [%s]", (char*)inp);
+            memset(inp, 0, sizeof(inp));
         }
     }
 }

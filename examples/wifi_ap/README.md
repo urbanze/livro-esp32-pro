@@ -1,7 +1,7 @@
-# WiFi
+# WiFi AP
+Demonstração e utilização do WiFi AP com ESP32.
 
-# Saída de dados
-
+## Saída de informações
 ```
 I (750) wifi_connect: Aguardando conexao WiFi
 I (750) net_handler: WiFi STA: Start

@@ -35,15 +35,16 @@ static void net_handler(void* arg, esp_event_base_t event_base, int32_t event_id
 
 void wifi_ap(const char *ssid, const char* password)
 {
+    //Inicializa a NVS, necessario para funcionamento do WiFi
     esp_err_t err = nvs_flash_init();
-    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-        // NVS partition was truncated and needs to be erased
-        // Retry nvs_flash_init
+    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND)
+    {
         ESP_ERROR_CHECK(nvs_flash_erase());
         err = nvs_flash_init();
     }
     ESP_ERROR_CHECK(err);
 
+    //Fase de criacao
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
     esp_netif_create_default_wifi_ap();
@@ -52,7 +53,7 @@ void wifi_ap(const char *ssid, const char* password)
     ESP_ERROR_CHECK(esp_wifi_init(&wcfg));
     ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &net_handler, NULL, NULL));
 
-
+    //Fase de configuracao
     wifi_config_t ap_cfg;
     memset(&ap_cfg, 0, sizeof(ap_cfg));
     strncpy((char*)ap_cfg.ap.ssid, ssid, 32);
@@ -62,7 +63,7 @@ void wifi_ap(const char *ssid, const char* password)
     ap_cfg.ap.authmode = WIFI_AUTH_WPA2_PSK;
     ap_cfg.ap.beacon_interval = 100;
     
-
+    //Fase de inicializacao e conexao
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_AP));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_AP, &ap_cfg));
     ESP_ERROR_CHECK(esp_wifi_start());

@@ -7,10 +7,11 @@
 
 void app_main(void)
 {
-    dac_output_enable(DAC_CHANNEL_1);
+    dac_output_enable(DAC_CHANNEL_1); //Habilita o DAC1
 
     while (1)
     {
+        //Gera a forma de onda 'dente de serra'
         for (int i = 0; i < 256; i++)
         {
             dac_output_voltage(DAC_CHANNEL_1, i);

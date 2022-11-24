@@ -12,11 +12,11 @@ esp_adc_cal_characteristics_t adc_cal;
 
 void app_main(void)
 {
-    adc1_config_width(ADC_WIDTH_BIT_12);
-    adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_DB_11);
+    adc1_config_width(ADC_WIDTH_BIT_12); //Configura o ADC1 para 12b
+    adc1_config_channel_atten(ADC1_CHANNEL_0, ADC_ATTEN_DB_11); //Configura 11db de atenuacao ao canal ADC1_0
  
-    
-    esp_adc_cal_value_t adc_type = esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_cal);//Inicializa a estrutura de calibracao
+    //Inicializa a estrutura de calibracao ao ADC1 para 11db e 12b    
+    esp_adc_cal_value_t adc_type = esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN_DB_11, ADC_WIDTH_BIT_12, 1100, &adc_cal);
  
     if (adc_type == ESP_ADC_CAL_VAL_EFUSE_VREF)
     {

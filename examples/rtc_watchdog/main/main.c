@@ -7,15 +7,15 @@
 
 void app_main(void)
 {
-    //Nao ocasiona o reinicio
+    //Loop1, que nao ocasiona o reinicio
     ESP_LOGI(__func__, "Loop1 nao ira reiniciar");
     for (int i = 0; i < 10; i++)
     {
         vTaskDelay(pdMS_TO_TICKS(500));
-        rtc_wdt_feed();
+        rtc_wdt_feed(); //Alimenta o watchdog
     }
 
-    //Ocasiona o reinicio
+    //Loop2, que ocasiona o reinicio
     ESP_LOGW(__func__, "Loop2 ira reiniciar");
     for (int i = 0; i < 10; i++)
     {

@@ -1,7 +1,7 @@
 # MQTT
+Demonstração e utilização do MQTT com ESP32.
 
-# Saída de dados
-
+## Saída de informações
 ```
 I (2987) net_handler: WiFi STA: Connected
 I (3597) net_handler: Got IP

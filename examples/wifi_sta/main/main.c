@@ -51,15 +51,16 @@ static void net_handler(void* arg, esp_event_base_t event_base, int32_t event_id
 
 void wifi_connect(const char *ssid, const char* password)
 {
+    //Inicializa a NVS, necessario para funcionamento do WiFi
     esp_err_t err = nvs_flash_init();
-    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-        // NVS partition was truncated and needs to be erased
-        // Retry nvs_flash_init
+    if (err == ESP_ERR_NVS_NO_FREE_PAGES || err == ESP_ERR_NVS_NEW_VERSION_FOUND)
+    {
         ESP_ERROR_CHECK(nvs_flash_erase());
         err = nvs_flash_init();
     }
     ESP_ERROR_CHECK(err);
 
+    //Fase de criacao
     ESP_ERROR_CHECK(esp_netif_init());
     ESP_ERROR_CHECK(esp_event_loop_create_default());
     esp_netif_create_default_wifi_sta();
@@ -69,7 +70,7 @@ void wifi_connect(const char *ssid, const char* password)
     ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &net_handler, NULL, NULL));
     ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &net_handler, NULL, NULL));
 
-
+    //Fase de configuracao
     wifi_config_t sta_cfg;
     memset(&sta_cfg, 0, sizeof(sta_cfg));
     strncpy((char*)sta_cfg.sta.ssid, ssid, 32);
@@ -81,8 +82,8 @@ void wifi_connect(const char *ssid, const char* password)
     sta_cfg.sta.sort_method = WIFI_CONNECT_AP_BY_SIGNAL;
     sta_cfg.sta.threshold.rssi = -127;
     sta_cfg.sta.threshold.authmode = WIFI_AUTH_OPEN;
-    
 
+    //Fase de inicializacao e conexao
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(WIFI_IF_STA, &sta_cfg));
     ESP_ERROR_CHECK(esp_wifi_start());

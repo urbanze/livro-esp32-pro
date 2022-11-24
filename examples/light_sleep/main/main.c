@@ -14,8 +14,8 @@ void app_main(void)
     {
         ESP_LOGI(__func__, "Test [%d]", i);
         
-        esp_sleep_enable_timer_wakeup(5000000);
-        esp_light_sleep_start();
+        esp_sleep_enable_timer_wakeup(5000000); //Configura 5seg de sleep
+        esp_light_sleep_start(); //Entra em light sleep
     }
 
     ESP_LOGW(__func__, "End");

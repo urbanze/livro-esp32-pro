@@ -14,15 +14,15 @@ void app_main(void)
     esp_task_wdt_add(NULL);
 
 
-    //Nao ocasiona o reinicio
+    //Loop1, que nao ocasiona o reinicio
     ESP_LOGI(__func__, "Loop1 nao ira reiniciar");
     for (int i = 0; i < 10; i++)
     {
         vTaskDelay(pdMS_TO_TICKS(500));
-        esp_task_wdt_reset();
+        esp_task_wdt_reset(); //Alimenta o TWDT
     }
 
-    //Ocasiona o reinicio
+    //Loop2, que ocasiona o reinicio
     ESP_LOGW(__func__, "Loop2 ira reiniciar");
     for (int i = 0; i < 10; i++)
     {
