@@ -96,7 +96,7 @@ void wifi_connect(const char *ssid, const char* password)
 void app_main(void)
 {
     //Inicializa e conecta no WiFi
-    wifi_connect("Morais", "pipoca2019");
+    wifi_connect("...", "...");
 
     //Inicializa o SNTP com o servidor [a.ntp.br]
     sntp_setoperatingmode(SNTP_OPMODE_POLL);
